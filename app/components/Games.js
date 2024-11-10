@@ -31,7 +31,7 @@ const Features = () => {
   return (
     <section className=" bg-black text-center">
       {/* Main Heading */}
-      <h2 className="text-4xl font-bold mb-10 text-white-800">Our Features</h2>
+      <h2 className="text-4xl font-bold mb-10 text-white-800">Our Games</h2>
 
       {/* Thumbnails Container with Increased Width */}
       <div className="container mx-auto max-w-screen-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

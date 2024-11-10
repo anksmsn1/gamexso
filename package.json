@@ -9,23 +9,42 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.6",
+    "@tinymce/tinymce-react": "^5.1.1",
+    "@tiptap/core": "^2.9.1",
+    "@tiptap/react": "^2.9.1",
+    "@tiptap/starter-kit": "^2.9.1",
+    "@vercel/postgres": "^0.10.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "draft-js": "^0.11.7",
     "drizzle-orm": "^0.36.0",
+    "froala-editor": "^4.3.0",
     "mysql2": "^3.11.3",
-    "next": "15.0.1",
+    "next": "^15.0.3",
+    "next-auth": "^4.24.10",
     "pg": "^8.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-froala-wysiwyg": "^4.3.0",
+    "react-quill": "^2.0.0",
     "react-slick": "^0.30.2",
-    "slick-carousel": "^1.8.1"
+    "slate": "^0.110.2",
+    "slate-react": "^0.111.0",
+    "slick-carousel": "^1.8.1",
+    "tinymce": "^7.4.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/pg": "^8.11.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "drizzle-kit": "^0.27.0",
+    "drizzle-kit": "^0.28.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.6.3"
   }
 }
