@@ -4,9 +4,7 @@ import { cms } from '../../../../lib/schema';
 import { eq } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
-  // Extract slug from the URL
-  const { searchParams } = new URL(request.url);
-  const slug = searchParams.get('slug');
+  const slug = request.nextUrl.pathname.split('/').pop();
 
   try {
     if (!slug) {

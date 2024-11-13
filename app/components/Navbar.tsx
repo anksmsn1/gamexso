@@ -34,6 +34,21 @@ const Navbar = () => {
   }, []);
   return (
     <nav className="bg-black text-white px-4 py-4 md:px-8">
+    <div className="container mx-auto flex justify-between items-center mb-4">
+        {/* Left column with right-aligned link */}
+        <div className="flex justify-end w-1/2 mr-5">
+          <Link href="/services" className="text-white hover:text-gray-400">Our Services</Link>
+        </div>
+
+        {/* Divider */}
+        <div className="border-l border-white h-3"></div>
+
+        {/* Right column with left-aligned link */}
+        <div className="flex justify-start w-1/2 ml-5">
+          <Link href="/business-enquiries" className="text-white hover:text-gray-400">Business Enquiries</Link>
+        </div>
+      </div>
+
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="text-2xl font-bold">
