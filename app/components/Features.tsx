@@ -1,14 +1,35 @@
+"use client"
 import Image from 'next/image';
-
-const featuresData = [
-  { id: 1, title: 'Upto 3X Assured Rewards', image: '/f1.png' },
-  { id: 2, title: 'Instant Withdrawls', image: '/f2.png' },
-  { id: 3, title: 'Unlimited Referral Earning', image: '/f3.png' },
-  { id: 4, title: '24x7 Support', image: '/f4.png' },
-  
-];
+import React, { useEffect, useState } from 'react';
+interface CmsData {
+  id: number;
+  title: string;
+  content: string; // HTML content field
+  image: string; // New column for image URL
+}
 
 const Features = () => {
+  const [cmsData, setCmsData] = useState<CmsData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+ 
+  const [error, setError] = useState<string>(''); // To handle validation errors
+
+  // Fetch data when component mounts
+  useEffect(() => {
+    const fetchCmsData = async () => {
+      try {
+        const response = await fetch('/api/features/'); // Replace with your API endpoint
+        const data = await response.json();
+        setCmsData(data);
+      } catch (error) {
+        console.error('Error fetching CMS data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCmsData();
+  }, []);
   return (
     <section className=" bg-black text-center">
       {/* Main Heading */}
@@ -16,7 +37,7 @@ const Features = () => {
 
       {/* Thumbnails Container with Increased Width */}
       <div className="container mx-auto max-w-screen-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {featuresData.map((feature) => (
+      { cmsData.map((feature) => (
           <div
             key={feature.id}
             className="bg-transparent  rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"

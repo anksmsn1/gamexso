@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Features from './components/Features';
 import Games from './components/Games';
 import StylishHr from "./components/StylishHr";
-import OurPartners from "./components/OurPartners";
+import OurPartners from './components/OurPartners';
 import Disclaimer from './components/Disclaimer';
 import Testimonials from './components/Testimonials';
 import DownloadGameBanner from './components/DownloadGameBanner';

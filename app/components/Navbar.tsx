@@ -1,15 +1,37 @@
 "use client";
-import { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "/public/logo.png";
+interface CmsData {
+  id: number;
+  title: string;
+  slug: string; // HTML content field
+  content: string; // HTML content field
+  heroImage: string; // New column for image URL
+}
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [cmsData, setCmsData] = useState<CmsData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  useEffect(() => {
+    const fetchCmsData = async () => {
+      try {
+        const response = await fetch('/api/cms/'); // Replace with your API endpoint
+        const data = await response.json();
+        setCmsData(data);
+      } catch (error) {
+        console.error('Error fetching CMS data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchCmsData();
+  }, []);
   return (
     <nav className="bg-black text-white px-4 py-4 md:px-8">
       <div className="container mx-auto flex justify-between items-center">
@@ -25,10 +47,11 @@ const Navbar = () => {
         {/* Menu Items - Visible on larger screens */}
         <div className="hidden md:flex space-x-8">
           <Link href="/">Home</Link>
-          <Link href="/features">Features</Link>
-          <Link href="/games">Games</Link>
-          <Link href="/reviews">Reviews</Link>
-          <Link href="/blog">Blog</Link>
+          {cmsData.map((pages, index) => (
+          <Link href={`/pages/${pages.slug}`} key={pages.id}>{pages.title}</Link>
+        ))}
+         
+          <Link href="/blog">Contact Us</Link>
         </div>
 
         {/* Hamburger Icon - Visible on smaller screens */}
