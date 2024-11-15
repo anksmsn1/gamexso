@@ -45,7 +45,7 @@ const Navbar = () => {
 
         {/* Right column with left-aligned link */}
         <div className="flex justify-start w-1/2 ml-5">
-          <Link href="/business-enquiries" className="text-white hover:text-gray-400">Business Enquiries</Link>
+          <Link href="/business" className="text-white hover:text-gray-400">Business Enquiries</Link>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ const Navbar = () => {
           <Link href={`/pages/${pages.slug}`} key={pages.id}>{pages.title}</Link>
         ))}
          
-          <Link href="/blog">Contact Us</Link>
+          <Link href="/contact">Contact Us</Link>
         </div>
 
         {/* Hamburger Icon - Visible on smaller screens */}

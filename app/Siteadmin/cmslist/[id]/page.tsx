@@ -1,6 +1,6 @@
 "use client"
-import React, { useState } from 'react';
-import Editor from '../../components/Editor';
+import React, { useEffect, useState } from 'react';
+import Editor from '../../../components/Editor';
 import { OutputData } from '@editorjs/editorjs';
 
 const Cms: React.FC = () => {
@@ -10,6 +10,34 @@ const Cms: React.FC = () => {
   const [position, setPosition] = useState<number>(1);
   const [errors, setErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [id, setId] = useState<string | null>(null);
+
+  const fetchData = async (fetchedId: string) => {
+    try {
+      const response = await fetch('/api/cms/details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: fetchedId }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch CMS details');
+      }
+
+      const result = await response.json();
+ 
+      setTitle(result.cmsData[0].title);
+      setContent(result.cmsData[0].content); // Assuming content is in plain string or HTML
+      setPosition(result.cmsData[0].position);
+      if (result.cmsData[0].heroImage) {
+        setHeroImageBase64(result.cmsData[0].heroImage); // Use actual image base64 or URL
+      }
+    } catch (error) {
+      console.error('Error fetching CMS details:', error);
+    }
+  };
 
   const validateForm = () => {
     const newErrors: string[] = [];
@@ -49,6 +77,7 @@ const Cms: React.FC = () => {
     setIsSubmitting(true);
 
     const formData = new FormData();
+    formData.append('id', id || '');
     formData.append('title', title);
     formData.append('content', content); // Content from the editor
     formData.append('position', position.toString());
@@ -59,7 +88,7 @@ const Cms: React.FC = () => {
 
     try {
       const response = await fetch('/api/cms', {
-        method: 'POST',
+        method: 'PUT',
         body: formData,
       });
 
@@ -69,19 +98,23 @@ const Cms: React.FC = () => {
 
       const result = await response.json();
       console.log('Post created successfully:', result);
-
-      // Reset form state
-      setTitle('');
-      setContent('');
-      setHeroImageBase64(null);
-      setPosition(1);
-
+      window.location.href = "/Siteadmin/cmslist";
     } catch (error) {
       console.error('Error creating post:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const pathParts = window.location.pathname.split('/');
+    const fetchedId = pathParts[pathParts.length - 1];
+    setId(fetchedId);
+
+    if (fetchedId) {
+      fetchData(fetchedId);
+    }
+  }, []);
 
   return (
     <div className="p-5">
@@ -97,13 +130,23 @@ const Cms: React.FC = () => {
         )}
 
         <div className="mb-5">
-          <label htmlFor="title" className="block mb-2">Page Title</label>
+          <label htmlFor="title" className="block mb-2">
+            Page Title
+          </label>
           <input
             type="text"
             id="title"
-            value={title}
+            value={title || ''}
             onChange={(e) => setTitle(e.target.value)}
             required
+            minLength={5}
+            maxLength={100}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <input
+            type="text"
+            id="id"
+            defaultValue={id || ''}
             minLength={5}
             maxLength={100}
             className="w-full p-2 border border-gray-300 rounded"
@@ -112,7 +155,9 @@ const Cms: React.FC = () => {
 
         <div className="flex mb-5 gap-4">
           <div className="flex-1">
-            <label htmlFor="heroImage" className="block mb-2">Upload Hero Image</label>
+            <label htmlFor="heroImage" className="block mb-2">
+              Upload Hero Image  
+            </label>
             <input
               type="file"
               id="heroImage"
@@ -120,10 +165,13 @@ const Cms: React.FC = () => {
               onChange={handleImageChange}
               className="w-full p-2 border border-gray-300 rounded"
             />
+            {heroImageBase64 && <img src={heroImageBase64} width={200} height={200} />}
           </div>
 
           <div className="flex-1">
-            <label htmlFor="position" className="block mb-2">Select Position (1-10)</label>
+            <label htmlFor="position" className="block mb-2">
+              Select Position (1-10)
+            </label>
             <select
               id="position"
               value={position}
@@ -140,17 +188,19 @@ const Cms: React.FC = () => {
           </div>
         </div>
 
-        <label htmlFor="content" className="block mb-2">Page Content</label>
-        <Editor value='' onChange={setContent} />
-        
+        <label htmlFor="content" className="block mb-2">
+          Page Content
+        </label>
+        <Editor value={content} onChange={setContent} /> {/* No ref prop passed */}
+
         <button
           type="submit"
           disabled={isSubmitting}
           className={`mt-5 px-4 py-2 rounded cursor-pointer ${
-            isSubmitting ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600 text-white"
+            isSubmitting ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white'
           }`}
         >
-          {isSubmitting ? 'Submitting...' : 'Submit'}
+          {isSubmitting ? 'Submitting...' : 'Update'}
         </button>
 
         {isSubmitting && (

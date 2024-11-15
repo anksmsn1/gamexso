@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "@/app/components/Navbar";
 import { useParams } from "next/navigation";
+import Loader from "@/app/components/Loader";
 // Define the structure of the data expected from the API
 interface AboutData {
   mission: string;
@@ -42,7 +43,7 @@ export default function Pages() {
     fetchData();
   }, [slug]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader/>;
   if (error) return <p>Error: {error}</p>;
 
   return (

@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row items-start justify-between space-y-8 lg:space-y-0">
           
           {/* Left Column: QR Code, Text, and Download Button */}
-          <div className="lg:w-3/4 flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-8">
+          <div className="lg:w-4/4 flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-8">
             
             {/* QR Code Section */}
             <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-lg">
@@ -38,15 +38,7 @@ const Footer = () => {
           </div>
           
           {/* Right Column: Important Links */}
-          <div className="lg:w-1/4 text-center lg:text-left">
-            <h4 className="text-lg font-semibold mb-2">Important Links</h4>
-            <ul className="space-y-2">
-              <li><a href="#about" className="text-gray-400 hover:text-white">About Us</a></li>
-              <li><a href="#privacy" className="text-gray-400 hover:text-white">Privacy Policy</a></li>
-              <li><a href="#terms" className="text-gray-400 hover:text-white">Terms of Service</a></li>
-              <li><a href="#support" className="text-gray-400 hover:text-white">Support</a></li>
-            </ul>
-          </div>
+          
         </div>
         
         {/* Divider */}

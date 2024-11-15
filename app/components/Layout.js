@@ -21,7 +21,9 @@ const Layout = () => {
     autoplay: true,
     autoplaySpeed: 3000,
   };
-
+const handleIosClick = () => {
+    alert('Coming Soon!');
+  };
   return (
     <div className="bg-black text-white min-h-screen flex items-center justify-center px-4">
       <div className="container mx-auto max-w-screen-lg flex flex-col md:flex-row items-center md:justify-between space-y-8 md:space-y-0 py-8 md:py-16">
@@ -40,11 +42,11 @@ const Layout = () => {
             12 lakhs + GST Refund <br /> Everyday
           </div>
           <div className="flex space-x-4 mt-4 md:mt-6">
-            <a href="#" className="flex items-center space-x-2">
-              <img src="/apple.png" alt="Apple Logo" className="w-6 h-6 md:w-8 md:h-8" />
+            <a href="#" onClick={handleIosClick} className="flex items-center space-x-2">
+              <img src="/apple.png" alt="Apple Logo" />
             </a>
-            <a href="#" className="flex items-center space-x-2">
-              <img src="/android.png" alt="Android Logo" className="w-6 h-6 md:w-8 md:h-8" />
+            <a href="https://play.google.com/store/apps/details?id=com.beastblocks.gamexso" target='_blank' className="flex items-center space-x-2">
+              <img src="/android.png" alt="Android Logo" />
             </a>
           </div>
         </div>
