@@ -9,9 +9,11 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header />
+      
       <div style={{ display: 'flex', flex: 1 }}>
         {/* Fixed Sidebar */}
         <div style={{ width: '250px', position: 'fixed', top: '60px', bottom: 0, left: 0 }}>

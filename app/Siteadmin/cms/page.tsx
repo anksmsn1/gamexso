@@ -1,16 +1,20 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { OutputData } from '@editorjs/editorjs';
 
+import Editor from '../../components/Editor';
 
 
 const Cms: React.FC = () => {
   const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
-  const [heroImageBase64, setHeroImageBase64] = useState<string | null>(null); // Store Base64 string
+  const [content, setContent] = useState<string>(''); // Ensure the editor content is stored here
+  const [heroImageBase64, setHeroImageBase64] = useState<string | null>(null);
   const [position, setPosition] = useState<number>(1);
   const [errors, setErrors] = useState<string[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // Loader state
- 
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); 
+
+  const [editorData, setEditorData] = useState<OutputData | null>(null);
 
   const validateForm = () => {
     const newErrors: string[] = [];
@@ -33,12 +37,15 @@ const Cms: React.FC = () => {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setHeroImageBase64(reader.result as string); // Set Base64 string
+        setHeroImageBase64(reader.result as string);
       };
 
-      reader.readAsDataURL(file); // Convert file to Base64
+      reader.readAsDataURL(file);
     }
   };
+
+  // This handles the editor content
+
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,21 +54,21 @@ const Cms: React.FC = () => {
       return;
     }
 
-    setIsSubmitting(true); // Start loader
+    setIsSubmitting(true); 
 
     const formData = new FormData();
     formData.append('title', title);
-    formData.append('content', content);
+    formData.append('content', content); // Content from the editor
     formData.append('position', position.toString());
 
     if (heroImageBase64) {
-      formData.append('heroImage', heroImageBase64); // Append Base64 string
+      formData.append('heroImage', heroImageBase64); 
     }
 
     try {
       const response = await fetch('/api/cms', {
         method: 'POST',
-        body: formData, // Send FormData directly
+        body: formData,
       });
 
       if (!response.ok) {
@@ -70,15 +77,18 @@ const Cms: React.FC = () => {
 
       const result = await response.json();
       console.log('Post created successfully:', result);
+
+      // Reset form state
       setTitle('');
       setContent('');
       setHeroImageBase64(null);
       setPosition(1);
-       
+      setEditorData(null); // Reset editor content
+
     } catch (error) {
       console.error('Error creating post:', error);
     } finally {
-      setIsSubmitting(false); // Stop loader
+      setIsSubmitting(false); 
     }
   };
 
@@ -140,19 +150,7 @@ const Cms: React.FC = () => {
         </div>
 
         <label htmlFor="content" className="block mb-2">Page Content</label>
-        <textarea
-          id="content"
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          
-          }}
-          rows={5}
-          required
-          minLength={20}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-
+        <Editor/>
         <button
           type="submit"
           disabled={isSubmitting}

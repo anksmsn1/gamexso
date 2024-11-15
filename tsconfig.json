@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+     "typeRoots": ["./node_modules/@types", "./types"],
+    "allowSyntheticDefaultImports": true,
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -23,6 +25,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/Games.js"],
+  "include": ["next-env.d.ts","types/**/*.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/Games.js"],
+  
   "exclude": ["node_modules"]
 }

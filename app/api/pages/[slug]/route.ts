@@ -33,5 +33,5 @@ export async function GET(request: NextRequest) {
       { message: error instanceof Error ? error.message : 'An error occurred' },
       { status: 500 }
     );
-  }
+  } 
 }

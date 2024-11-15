@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'react-quill/dist/quill.snow.css';
+@import 'flowbite';
+ /* or 'quill.bubble.css' for a different theme */
 
 :root {
   --background: #ffffff;
