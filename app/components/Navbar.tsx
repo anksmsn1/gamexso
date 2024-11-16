@@ -36,7 +36,7 @@ const Navbar = () => {
     <><div className=" mx-auto flex justify-between items-center p-2 bg-red-500">
     {/* Left column with right-aligned link */}
     <div className="flex justify-end w-1/2 mr-5">
-      <Link href="/services" className="text-white hover:text-gray-400">Our Services</Link>
+      <Link href="/services" className="text-white font-bold hover:text-gray-400">Our Services</Link>
     </div>
 
     {/* Divider */}
@@ -44,7 +44,7 @@ const Navbar = () => {
 
     {/* Right column with left-aligned link */}
     <div className="flex justify-start w-1/2 ml-5">
-      <Link href="/business" className="text-white hover:text-gray-400">Business Enquiries</Link>
+      <Link href="/business" className="text-white font-bold hover:text-gray-400">Business Enquiries</Link>
     </div>
   </div>
     <nav className="bg-black text-white px-4 py-4 md:px-8">
@@ -67,6 +67,7 @@ const Navbar = () => {
           <Link href={`/pages/${pages.slug}`} key={pages.id}>{pages.title}</Link>
         ))}
          
+          <Link href="/ourteam">Our Team</Link>
           <Link href="/contact">Contact Us</Link>
         </div>
 

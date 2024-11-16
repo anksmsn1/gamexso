@@ -1,5 +1,6 @@
 // components/Footer.js
 import React from 'react';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -29,24 +30,71 @@ const Footer = () => {
                 Ready to start your adventure? Scan the QR code or click the link to download!
               </p>
               <a
-                href="https://your-game-download-link.com"
+                href="https://play.google.com/store/apps/details?id=com.beastblocks.gamexso"
                 className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg"
               >
                 Download Game
               </a>
             </div>
           </div>
-          
-          {/* Right Column: Important Links */}
-          
         </div>
         
         {/* Divider */}
         <div className="border-t border-gray-700"></div>
         
-        {/* Footer Bottom */}
-        <div className="text-center text-gray-500">
-          © 2024  Gamexso Games Private Limited. All rights reserved.
+        {/* Footer Bottom with Social Media Icons */}
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex space-x-6">
+            <a
+              href="https://www.facebook.com/gamexsoofficial"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white"
+            >
+              <FaFacebookF size={24} />
+            </a>
+            <a
+              href="https://x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white"
+            >
+              {/* Custom SVG for X logo */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-400 hover:text-white"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M4 4L20 20M4 20L20 4"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://www.instagram.com/gamexsoofficial/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white"
+            >
+              <FaInstagram size={24} />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white"
+            >
+              <FaLinkedinIn size={24} />
+            </a>
+          </div>
+          <div className="text-center text-gray-500">
+            © 2024 Gamexso Games Private Limited. All rights reserved.
+          </div>
         </div>
       </div>
     </footer>
