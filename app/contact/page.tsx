@@ -45,15 +45,16 @@ const Contact = () => {
               <div className="contact-info space-y-4">
                 <div className="contact-item">
                   <h3 className="text-xl font-semibold">Phone</h3>
-                  <p>+1 (234) 567-890</p>
+                  <p><a href='tel:+919161610042'>+91-9161610042</a></p>
                 </div>
                 <div className="contact-item">
                   <h3 className="text-xl font-semibold">Email</h3>
-                  <p>support@yourcompany.com</p>
+                  <p>support@gamexso.com</p>
                 </div>
                 <div className="contact-item">
                   <h3 className="text-xl font-semibold">Address</h3>
-                  <p>1234 Your Street, City, State, 12345</p>
+                  <p>Gamexso Games Private Limited</p>
+                  <p>C/O Brijbhan Yadav floor  1st Bhadi Shahganj Jaunpur Utter Pradesh 223101  </p>
                 </div>
               </div>
             </div>

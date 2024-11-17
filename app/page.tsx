@@ -7,7 +7,7 @@ import OurPartners from './components/OurPartners';
 import Disclaimer from './components/Disclaimer';
 import Testimonials from './components/Testimonials';
 import DownloadGameBanner from './components/DownloadGameBanner';
-import Footer from './components/Footer';
+import Footer from './components/Footer'; 
 export default function Home() {
   return (
     <>

@@ -1,8 +1,35 @@
-// components/Footer.js
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
+interface CmsData {
+  id: number;
+  title: string;
+  slug: string; // HTML content field
+  content: string; // HTML content field
+  heroImage: string; // New column for image URL
+}
+
 const Footer = () => {
+  const [cmsData, setCmsData] = useState<CmsData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchCmsData = async () => {
+      try {
+        const response = await fetch('/api/footermenu/'); // Replace with your API endpoint
+        const data = await response.json();
+        setCmsData(data);
+      } catch (error) {
+        console.error('Error fetching CMS data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCmsData();
+  }, []);
+
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="container mx-auto px-6 lg:px-12 space-y-10">
@@ -38,7 +65,23 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
+
+        <div className="border-t border-gray-700"></div>
+        <div className="mt-8">
+          <h1 className='text-[1.5rem] text-center mb-10'>Important Links</h1>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {cmsData.map((item) => (
+              <a
+                key={item.slug}
+                href={`/pages/${item.slug}`}
+                className="text-center text-gray-400 hover:text-white text-lg"
+              >
+                {item.title}
+              </a>
+            ))}
+          </div>
+        </div>
+
         {/* Divider */}
         <div className="border-t border-gray-700"></div>
         

@@ -35,6 +35,7 @@ export const cms = pgTable(
     title: text('title').notNull(),
     content: text('content').notNull(),
     position: serial('position').notNull(),
+    linkPosition: text('linkPosition').notNull(),
     heroImage: text('heroImage').notNull(),
     slug: text('slug').notNull(),
     

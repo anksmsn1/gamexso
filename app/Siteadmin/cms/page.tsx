@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Editor from '../../components/Editor';
 import { OutputData } from '@editorjs/editorjs';
 
@@ -8,14 +8,15 @@ const Cms: React.FC = () => {
   const [content, setContent] = useState<string>(''); // Content from the editor
   const [heroImageBase64, setHeroImageBase64] = useState<string | null>(null);
   const [position, setPosition] = useState<number>(1);
+  const [linkPosition, setLinkPosition] = useState<string>('Main Menu');
   const [errors, setErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
+  const editorRef = useRef<any>(null);
   const validateForm = () => {
     const newErrors: string[] = [];
 
-    if (title.length < 5 || title.length > 100) {
-      newErrors.push("Title must be between 5 and 100 characters.");
+    if (title.length < 2 || title.length > 100) {
+      newErrors.push("Title must be between 2 and 100 characters.");
     }
 
     if (!content || content.trim().length < 20) {
@@ -51,6 +52,7 @@ const Cms: React.FC = () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content); // Content from the editor
+    formData.append('linkPosition', linkPosition); // Content from the editor
     formData.append('position', position.toString());
 
     if (heroImageBase64) {
@@ -75,6 +77,8 @@ const Cms: React.FC = () => {
       setContent('');
       setHeroImageBase64(null);
       setPosition(1);
+      setLinkPosition('Main Menu');
+      editorRef.current?.clearContent();
 
     } catch (error) {
       console.error('Error creating post:', error);
@@ -138,10 +142,27 @@ const Cms: React.FC = () => {
               ))}
             </select>
           </div>
+
+          <div className="flex-1">
+            <label htmlFor="linkPosition" className="block mb-2">Link Position</label>
+            <select
+              id="linkPosition"
+              value={linkPosition}
+              onChange={(e) => setLinkPosition(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded"
+            >
+             
+                <option  value="Main Menu">Main Menu</option>
+              
+                <option  value="Footer">Footer</option>
+              
+            </select>
+          </div>
         </div>
 
         <label htmlFor="content" className="block mb-2">Page Content</label>
-        <Editor value='' onChange={setContent} />
+        <Editor  value='' onChange={setContent} />
         
         <button
           type="submit"

@@ -17,13 +17,15 @@ export async function POST(req: NextRequest) {
   
       const title = formData.get('title') as string;
       const content = formData.get('content') as string;
+      const linkPosition = formData.get('linkPosition') as string;
       const position = Number(formData.get('position')); // Convert to number
       const heroImage = formData.get('heroImage') as string;
       const slug = generateSlug(title);
       const insertedUser = await db.insert(cms).values({
         title: title,
         content: content,
-        position: position, // Ensure this is a number
+        position: position,  
+        linkPosition: linkPosition,  
         heroImage: heroImage,
         slug:slug
       }).returning();
@@ -45,6 +47,7 @@ export async function POST(req: NextRequest) {
   
       const title = formData.get('title') as string;
       const content = formData.get('content') as string;
+      const linkPosition = formData.get('linkPosition') as string;
       const position = Number(formData.get('position')); // Convert to number
       const heroImage = formData.get('heroImage') as string;
       const id = formData.get('id') as string;
@@ -59,6 +62,7 @@ if (isNaN(idNumber)) {
         title: title,
         content: content,
         position: position,  // Ensure this is a number
+        linkPosition: linkPosition,  // Ensure this is a number
         heroImage: heroImage,  // Ensure heroImage is handled properly (base64 or URL)
         slug: slug,  // Ensure slug is passed correctly
       })

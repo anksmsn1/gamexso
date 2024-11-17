@@ -20,7 +20,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCmsData = async () => {
       try {
-        const response = await fetch('/api/cms/'); // Replace with your API endpoint
+        const response = await fetch('/api/topmenu/'); // Replace with your API endpoint
         const data = await response.json();
         setCmsData(data);
       } catch (error) {
@@ -64,10 +64,11 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-8">
           <Link href="/">Home</Link>
           {cmsData.map((pages, index) => (
-          <Link href={`/pages/${pages.slug}`} key={pages.id}>{pages.title}</Link>
+          <Link href={`/pages/${pages.slug}`} key={pages.slug}>{pages.title}</Link>
         ))}
          
           <Link href="/ourteam">Our Team</Link>
+          <Link href="/legalmemo">Legal Memo</Link>
           <Link href="/contact">Contact Us</Link>
         </div>
 
@@ -104,24 +105,16 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden mt-4 space-y-2">
-          <Link href="/">
-            <a className="block px-4 py-2 hover:bg-gray-700 rounded">Home</a>
+        <Link href="/" className="block">Home</Link>
+        {cmsData.map((pages) => (
+          <Link href={`/pages/${pages.slug}`} key={pages.slug} className="block text-center">
+            {pages.title}
           </Link>
-          <Link href="/features">
-            <a className="block px-4 py-2 hover:bg-gray-700 rounded">
-              Features
-            </a>
-          </Link>
-          <Link href="/games">
-            <a className="block px-4 py-2 hover:bg-gray-700 rounded">Games</a>
-          </Link>
-          <Link href="/reviews">
-            <a className="block px-4 py-2 hover:bg-gray-700 rounded">Reviews</a>
-          </Link>
-          <Link href="/blog">
-            <a className="block px-4 py-2 hover:bg-gray-700 rounded">Blog</a>
-          </Link>
-        </div>
+        ))}
+        <Link href="/ourteam" className="block text-center">Our Team</Link>
+        <Link href="/legalmemo" className="block text-center">Legal Memo</Link>
+        <Link href="/contact" className="block text-center">Contact Us</Link>
+      </div>
       )}
     </nav>
     
