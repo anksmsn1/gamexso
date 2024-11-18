@@ -11,6 +11,13 @@ const teamMembers = [
     
   },
   {
+    name: 'Brijbhan Yadav',
+    role: 'Co-Founder',
+     // Replace with the correct image paths
+    bio: 'Visionary leader and tech enthusiast with 15 years of industry experience.',
+    
+  },
+  {
     name: 'Kuldeep yadav',
     role: 'Co-Founder',
     

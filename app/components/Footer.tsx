@@ -1,18 +1,19 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from 'react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 interface CmsData {
   id: number;
   title: string;
-  slug: string; // HTML content field
-  content: string; // HTML content field
-  heroImage: string; // New column for image URL
+  slug: string;
+  content: string;
+  heroImage: string;
 }
 
 const Footer = () => {
   const [cmsData, setCmsData] = useState<CmsData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false); // State for dropdown
 
   useEffect(() => {
     const fetchCmsData = async () => {
@@ -34,13 +35,9 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white py-12">
       <div className="container mx-auto px-6 lg:px-12 space-y-10">
         
-        {/* Two-column Layout */}
+        {/* QR Code and Download Section */}
         <div className="flex flex-col lg:flex-row items-start justify-between space-y-8 lg:space-y-0">
-          
-          {/* Left Column: QR Code, Text, and Download Button */}
           <div className="lg:w-4/4 flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-8">
-            
-            {/* QR Code Section */}
             <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-lg">
               <img
                 src="/qr.jpeg"
@@ -49,8 +46,6 @@ const Footer = () => {
               />
               <p className="text-gray-800 text-sm mt-2">Scan to Download</p>
             </div>
-            
-            {/* Text Content and Download Button */}
             <div className="text-center md:text-left md:flex-1">
               <h3 className="text-2xl font-semibold mb-3">Download the Game Now!</h3>
               <p className="text-gray-400 mb-4">
@@ -66,10 +61,38 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Divider */}
         <div className="border-t border-gray-700"></div>
+
+        {/* Important Links Section */}
         <div className="mt-8">
-          <h1 className='text-[1.5rem] text-center mb-10'>Important Links</h1>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <h1 className="text-[1.5rem] text-center mb-10">Important Links</h1>
+
+          {/* Mobile View: Dropdown */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="w-full text-left bg-gray-800 text-white py-3 px-4 rounded-lg hover:bg-gray-700"
+            >
+              {isDropdownOpen ? 'Hide Links' : 'Show Links'}
+            </button>
+            {isDropdownOpen && (
+              <div className="mt-4 space-y-2">
+                {cmsData.map((item) => (
+                  <a
+                    key={item.slug}
+                    href={`/pages/${item.slug}`}
+                    className="block text-gray-400 hover:text-white text-lg px-4"
+                  >
+                    {item.title}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Desktop View: Grid */}
+          <div className="hidden lg:grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {cmsData.map((item) => (
               <a
                 key={item.slug}
@@ -85,7 +108,7 @@ const Footer = () => {
         {/* Divider */}
         <div className="border-t border-gray-700"></div>
         
-        {/* Footer Bottom with Social Media Icons */}
+        {/* Footer Bottom */}
         <div className="flex flex-col items-center space-y-4">
           <div className="flex space-x-6">
             <a
@@ -102,7 +125,6 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white"
             >
-              {/* Custom SVG for X logo */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 text-gray-400 hover:text-white"
