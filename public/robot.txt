@@ -1,0 +1,11 @@
+# Allow all bots to crawl all pages
+User-agent: *
+Disallow: /private/
+Disallow: /old-pages/
+
+# Block specific bots (e.g., Googlebot)
+User-agent: Googlebot
+Disallow: /no-google/
+
+# Sitemap location (optional)
+Sitemap: https://www.gamexso.com/sitemap.xml
