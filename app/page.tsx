@@ -13,6 +13,7 @@ export default function Home() {
     <>
     <Navbar/>
     <main className="bg-black text-white">
+      
       <Layout />
       <StylishHr variant="iconDivider" />
 

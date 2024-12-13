@@ -15,6 +15,7 @@ import AboutUsImage from '../../public/about-us.jpg';
 export default function Home() {
   return (
     <>
+    
     <Navbar/>
 
     <main className="bg-black text-white">

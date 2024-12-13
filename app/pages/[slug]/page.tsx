@@ -42,49 +42,27 @@ export default function Pages() {
 
   return (
     <>
+    
       <Navbar />
-      <div style={{ backgroundColor: "#000", color: "#f0f0f0" }}>
-        {/* Hero Section */}
-        <section
-          style={{
-            backgroundImage: `url(${data?.heroImage || '/path-to-default-image.jpg'})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            position: "relative",
-            padding: "100px 20px",
-            textAlign: "center",
-            color: "#f0f0f0",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.6)",
-            }}
-          ></div>
-          <h1 style={{ position: "relative", fontSize: "3rem", zIndex: 1 }}>
-            {data?.title || ""}
-          </h1>
-          
-        </section>
-
-        {/* Additional Content from API */}
+      <section className="py-16 bg-black">
+      <div className="container mx-auto px-6 text-center">
+        <h2 className="text-4xl font-bold text-white mb-6">{data?.title}</h2>
+       
+        <div className="w-[80%] mx-auto py-10 text-white text-left">
         {data && (
-         <section className="w-[80%] mx-auto py-20">
+        
          <div 
            dangerouslySetInnerHTML={{
              __html: data.content || "",
            }}
          ></div>
        
-         {/* Render more sections based on data as needed */}
-       </section>
+       
         )}
+        </div>
       </div>
+    </section>
+     
       <Footer/>
     </>
   );
