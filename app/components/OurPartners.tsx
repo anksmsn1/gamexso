@@ -24,7 +24,7 @@ const OurPartners = () => {
   useEffect(() => {
     const fetchCmsData = async () => {
       try {
-        const response = await fetch('/api/games/'); // Replace with your API endpoint
+        const response = await fetch('/api/partners/'); // Replace with your API endpoint
         const data = await response.json();
         setCmsData(data);
       } catch (error) {
