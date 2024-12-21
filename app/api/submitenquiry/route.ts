@@ -28,7 +28,7 @@ export async function  POST(req: NextRequest) {
     <p><b>Phone Numner:</b>${phone}</p>
     <p><b>Message:</b>${message}</p>`;
 
-    const to="ankurssri87@gmail.com";
+    const to="gamexsogames@gmail.com";
     const mailOptions = {
       from: "hostludo@gmail.com",
       to,
