@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1734712169368,
+      "tag": "0000_futuristic_stark_industries",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1734761233302,
+      "tag": "0001_outgoing_deathstrike",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1734761839176,
+      "tag": "0002_ordinary_micromacro",
+      "breakpoints": true
+    }
+  ]
+}

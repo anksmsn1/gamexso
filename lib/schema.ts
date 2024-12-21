@@ -84,6 +84,23 @@ export const games = pgTable(
   },
 );
 
+export const ourservices = pgTable(
+  'ourservices',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    content: text('content').notNull(),
+   
+    image: text('image').notNull(),
+   
+    
+  },
+  (ourservices) => {
+    return {
+      uniqueIdx: uniqueIndex('ourservices_unique_idx').on(ourservices.id),
+    };
+  },
+);
 
 export const partners = pgTable(
   'partners',
@@ -119,6 +136,21 @@ export const testimonials = pgTable(
       uniqueIdx: uniqueIndex('testimonials_unique_idx').on(testimonials.id),
     };
   },
+);
+
+export const services = pgTable(
+  'services',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    image: text('image').notNull(),
+    content: text('content').notNull(),
+  },
+  (services) => {
+    return {
+      uniqueIdx: uniqueIndex('services_unique_idx').on(services.id),
+    };
+  }
 );
 
 export const getExampleTable = async () => {

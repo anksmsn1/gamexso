@@ -45,6 +45,11 @@ export default function Sidebar() {
             </Link>
           </li>
           <li className="text-white mb-5">
+            <Link href="/Siteadmin/services">
+              <span className="text-lg">{isOpen ? "Our Services" : "OS"}</span>
+            </Link>
+          </li>
+          <li className="text-white mb-5">
             <Link href="/Siteadmin/testimonials">
               <span className="text-lg">{isOpen ? "Testimonials" : "T"}</span>
             </Link>
