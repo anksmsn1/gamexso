@@ -54,6 +54,11 @@ export default function Sidebar() {
               <span className="text-lg">{isOpen ? "Testimonials" : "T"}</span>
             </Link>
           </li>
+          <li className="text-white mb-5">
+            <Link href="/Siteadmin/banners">
+              <span className="text-lg">{isOpen ? "Manage Banners" : "B"}</span>
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

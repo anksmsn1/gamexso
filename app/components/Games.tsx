@@ -50,7 +50,7 @@ const Games = () => {
             src={item.image}
             alt={item.title}
             width={150}
-            height={150}
+            height={170}
             className="rounded-full" // Make the image itself circular
           />
         </div>

@@ -1,17 +1,18 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Editor from '../../../components/Editor';
 import { OutputData } from '@editorjs/editorjs';
-
+import { upload } from '@vercel/blob/client';
 const Cms: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>(''); // Content from the editor
   const [heroImageBase64, setHeroImageBase64] = useState<string | null>(null);
+  const [linkPosition, setLinkPosition] = useState<string>('');
   const [position, setPosition] = useState<number>(1);
   const [errors, setErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [id, setId] = useState<string | null>(null);
-
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const fetchData = async (fetchedId: string) => {
     try {
       const response = await fetch('/api/cms/details', {
@@ -31,6 +32,7 @@ const Cms: React.FC = () => {
       setTitle(result.cmsData[0].title);
       setContent(result.cmsData[0].content); // Assuming content is in plain string or HTML
       setPosition(result.cmsData[0].position);
+      setLinkPosition(result.cmsData[0].linkposition);
       if (result.cmsData[0].heroImage) {
         setHeroImageBase64(result.cmsData[0].heroImage); // Use actual image base64 or URL
       }
@@ -42,8 +44,8 @@ const Cms: React.FC = () => {
   const validateForm = () => {
     const newErrors: string[] = [];
 
-    if (title.length < 5 || title.length > 100) {
-      newErrors.push("Title must be between 5 and 100 characters.");
+    if (title.length < 3 || title.length > 100) {
+      newErrors.push("Title must be between 3 and 100 characters.");
     }
 
     if (!content || content.trim().length < 20) {
@@ -54,18 +56,41 @@ const Cms: React.FC = () => {
     return newErrors.length === 0;
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
+  const handleImageChange = async () => {
+    if (!fileInputRef.current?.files) {
+      throw new Error('No file selected');
+    }
+    // setPhotoUpoading(true);
+    const file = fileInputRef.current.files[0];
 
-      reader.onloadend = () => {
-        setHeroImageBase64(reader.result as string);
-      };
+    try {
+      const newBlob = await upload(file.name, file, {
+        access: 'public',
+        handleUploadUrl: '/api/uploads',
+      });
+      // setPhotoUpoading(false);
+      const imageUrl = newBlob.url;
+      console.log(imageUrl);
+      setHeroImageBase64(imageUrl);
 
-      reader.readAsDataURL(file);
+    } catch (error) {
+      // setPhotoUpoading(false);
+      console.error('Error uploading file:', error);
     }
   };
+
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     const file = e.target.files[0];
+  //     const reader = new FileReader();
+
+  //     reader.onloadend = () => {
+  //       setHeroImageBase64(reader.result as string);
+  //     };
+
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,6 +106,7 @@ const Cms: React.FC = () => {
     formData.append('title', title);
     formData.append('content', content); // Content from the editor
     formData.append('position', position.toString());
+    formData.append('linkPosition',linkPosition);
 
     if (heroImageBase64) {
       formData.append('heroImage', heroImageBase64);
@@ -144,7 +170,7 @@ const Cms: React.FC = () => {
             className="w-full p-2 border border-gray-300 rounded"
           />
           <input
-            type="text"
+            type="hidden"
             id="id"
             defaultValue={id || ''}
             minLength={5}
@@ -163,6 +189,7 @@ const Cms: React.FC = () => {
               id="heroImage"
               accept="image/*"
               onChange={handleImageChange}
+              ref={fileInputRef}
               className="w-full p-2 border border-gray-300 rounded"
             />
             {heroImageBase64 && <img src={heroImageBase64} width={200} height={200} />}
@@ -184,6 +211,22 @@ const Cms: React.FC = () => {
                   {index + 1}
                 </option>
               ))}
+            </select>
+          </div>
+          <div className="flex-1">
+            <label htmlFor="linkPosition" className="block mb-2">Link Position</label>
+            <select
+              id="linkPosition"
+              value={linkPosition}
+              onChange={(e) => setLinkPosition(e.target.value)}
+              required
+              className="w-full p-2 border border-gray-300 rounded"
+            >
+             
+                <option  value="Main Menu">Main Menu</option>
+              
+                <option  value="Footer">Footer</option>
+              
             </select>
           </div>
         </div>

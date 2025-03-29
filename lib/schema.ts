@@ -153,6 +153,22 @@ export const services = pgTable(
   }
 );
 
+
+export const banners = pgTable(
+  'banners',
+  {
+    id: serial('id').primaryKey(),
+    
+    image: text('image').notNull(),
+   
+  },
+  (banners) => {
+    return {
+      uniqueIdx: uniqueIndex('banners_unique_idx').on(banners.id),
+    };
+  }
+);
+
 export const getExampleTable = async () => {
   const selectResult = await db.select().from(users);
   console.log('Results', selectResult);

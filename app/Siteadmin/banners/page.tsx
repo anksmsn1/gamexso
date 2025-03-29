@@ -4,12 +4,11 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface CmsData {
   id: number;
-  title: string;
-  content: string; // HTML content field
+ 
   image: string; // New column for image URL
 }
 
-const Games: React.FC = () => {
+const Banners: React.FC = () => {
   const [cmsData, setCmsData] = useState<CmsData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -30,7 +29,7 @@ const Games: React.FC = () => {
   useEffect(() => {
     const fetchCmsData = async () => {
       try {
-        const response = await fetch('/api/games/'); // Replace with your API endpoint
+        const response = await fetch('/api/banners/'); // Replace with your API endpoint
         const data = await response.json();
         setCmsData(data);
       } catch (error) {
@@ -46,7 +45,7 @@ const Games: React.FC = () => {
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
-        const response = await fetch(`/api/games/delete`, {
+        const response = await fetch(`/api/banners/delete`, {
           method: 'POST', // Change to POST
           headers: {
             'Content-Type': 'application/json', // Set content type for JSON request
@@ -90,7 +89,7 @@ const Games: React.FC = () => {
   };
 
   const handleAddFeatureClick = () => {
-    setModalContent('Add New Game');
+    setModalContent('Add New Banner');
     setIsModalOpen(true);
   };
 
@@ -129,31 +128,31 @@ const Games: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   
-    if (!formData.title || !formData.image) {
-      setError('Please provide both title and a PNG image.');
+    if (!formData.imagePreview) {
+      setError('Please Upload an image.');
       return;
     }
   
     // Prepare the form data for submission
     const form = new FormData();
-    form.append('title', formData.title);
+   
     form.append('image', formData.imagePreview);
   
     try {
-      const response = await fetch('/api/games', {
+      const response = await fetch('/api/banners', {
         method: 'POST',
         body: form, // Send form data including image
       });
   
       if (response.ok) {
-        alert('Game added successfully!');
+        alert('Banner added successfully!');
         const newFeature = await response.json(); // Assuming the server returns the newly created feature
       
         // Add the new feature to the top of the list
         setCmsData((prevData) => [newFeature, ...prevData]);
         closeModal(); // Close the modal on success
       } else {
-        alert('Failed to add game');
+        alert('Failed to add Banner');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -166,9 +165,9 @@ const Games: React.FC = () => {
         className="mb-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
         onClick={handleAddFeatureClick} // Trigger modal on click
       >
-        Add Game
+        Add Banner
       </button>
-      <h1 className="text-2xl font-bold mb-4 mt-5">Games List</h1>
+      <h1 className="text-2xl font-bold mb-4 mt-5">Banners List</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border-collapse border border-gray-200">
           <thead>
@@ -180,12 +179,7 @@ const Games: React.FC = () => {
                 ID {sortConfig.key === 'id' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
               </th>
               <th className="border border-gray-300 p-2 text-left">Image</th>
-              <th
-                className="border border-gray-300 p-2 text-left cursor-pointer"
-                onClick={() => sortData('title')}
-              >
-                Title {sortConfig.key === 'title' && (sortConfig.direction === 'ascending' ? '↑' : '↓')}
-              </th>
+              
              
               <th className="border border-gray-300 p-2 text-left">Actions</th>
             </tr>
@@ -202,9 +196,9 @@ const Games: React.FC = () => {
                     <tr key={item.id} className="hover:bg-gray-100">
                       <td className="border border-gray-300 p-2">{item.id}</td>
                       <td className="border border-gray-300 p-2">
-                        <img src={item.image} alt={item.title} className="w-16 h-16 object-cover rounded" />
+                        <img src={item.image} alt={item.image} className="w-16 h-16 object-cover rounded" />
                       </td>
-                      <td className="border border-gray-300 p-2">{item.title}</td>
+                      
                       <td className="border border-gray-300 p-2">
                         <div className="flex space-x-2">
                           
@@ -224,21 +218,10 @@ const Games: React.FC = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Add New Game</h2>
+            <h2 className="text-xl font-bold mb-4">Add New Banner</h2>
 
             <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
+              
 
               <div className="mb-4">
                 <label htmlFor="image" className="block text-sm font-medium text-gray-700">Upload PNG Image</label>
@@ -246,7 +229,7 @@ const Games: React.FC = () => {
                   type="file"
                   id="image"
                   name="image"
-                  accept="image/png"
+                  accept="image/png, image/jpeg, image/jpg"
                   onChange={handleImageChange}
                   ref={fileInputRef}
                   className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -279,4 +262,4 @@ const Games: React.FC = () => {
   );
 };
 
-export default Games;
+export default Banners;

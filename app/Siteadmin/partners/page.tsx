@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import { upload } from '@vercel/blob/client';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface CmsData {
   id: number;
@@ -10,6 +11,7 @@ interface CmsData {
 
 const Partners: React.FC = () => {
   const [cmsData, setCmsData] = useState<CmsData[]>([]);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [sortConfig, setSortConfig] = useState<{ key: keyof CmsData; direction: 'ascending' | 'descending' }>({
     key: 'id',
@@ -97,24 +99,30 @@ const Partners: React.FC = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    if (file) {
-      if (file.type !== 'image/png') {
-        setError('Only PNG images are allowed.');
-        setFormData((prevData) => ({ ...prevData, image: null, imagePreview: '' }));
-      } else {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setFormData((prevData) => ({
-            ...prevData,
-            image: file,
-            imagePreview: reader.result as string,
-          }));
-          setError(''); // Clear any previous error
-        };
-        reader.readAsDataURL(file);
-      }
+  const handleImageChange = async () => {
+    if (!fileInputRef.current?.files) {
+      throw new Error('No file selected');
+    }
+    // setPhotoUpoading(true);
+    const file = fileInputRef.current.files[0];
+
+    try {
+      const newBlob = await upload(file.name, file, {
+        access: 'public',
+        handleUploadUrl: '/api/uploads',
+      });
+      // setPhotoUpoading(false);
+      const imageUrl = newBlob.url;
+      console.log(imageUrl);
+      setFormData((prevData) => ({
+                ...prevData,
+               image: file,
+                 imagePreview:imageUrl,
+                }));
+
+    } catch (error) {
+      // setPhotoUpoading(false);
+      console.error('Error uploading file:', error);
     }
   };
 
@@ -240,6 +248,7 @@ const Partners: React.FC = () => {
                   name="image"
                   accept="image/png"
                   onChange={handleImageChange}
+                  ref={fileInputRef}
                   className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />

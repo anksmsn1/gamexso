@@ -1,13 +1,35 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import SlickWrapper from "./SlickWrapper";
-import appImage1 from "/public/banner1.png";
-import appImage2 from "/public/banner2.png";
-import appImage3 from "/public/banner3.png";
-import appImage4 from "/public/banner4.png";
+
+interface Banner {
+  id: number;
+  image: string;
+}
 
 const Layout: React.FC = () => {
+  const [banners, setBanners] = useState<Banner[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Fetch banner images dynamically
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await fetch("/api/banners"); // Replace with your actual API endpoint
+        const data = await response.json();
+        setBanners(data);
+      } catch (error) {
+        console.error("Error fetching banners:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBanners();
+  }, []);
+
   // Slider settings
   const sliderSettings = {
     dots: true,
@@ -32,16 +54,16 @@ const Layout: React.FC = () => {
             <h1 className="text-3xl md:text-4xl font-bold">
               <span className="text-red-600">Every Second</span>
               <br className="hidden md:block" />
-              New Registration
+              Registered new users
             </h1>
             <h2 className="text-3xl md:text-4xl font-bold mt-2">
-              <span className="text-red-600">2 Crore +</span>
+              <span className="text-red-600">12 Lacks +</span>
               <br className="hidden md:block" />
               Highest Winnings Everyday
             </h2>
           </div>
           <div className="bg-yellow-500 text-black font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg text-base md:text-lg">
-            12 lakhs + GST Refund <br /> Everyday
+            Winning + GST Refund Everyday
           </div>
           <div className="flex space-x-4 mt-4 md:mt-6">
             <a href="#" onClick={handleIosClick} className="flex items-center space-x-2">
@@ -58,22 +80,28 @@ const Layout: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Section with Slider */}
+        {/* Right Section with Dynamic Banner Slider */}
         <div className="w-full md:w-3/4 lg:w-2/5 mt-6 md:mt-0">
-          <SlickWrapper settings={sliderSettings}>
-            <div>
-              <Image src={appImage1} alt="App Image 1" layout="responsive" className="rounded-lg md:h-[400px]" />
-            </div>
-            <div>
-              <Image src={appImage2} alt="App Image 2" layout="responsive" className="rounded-lg md:h-[400px]" />
-            </div>
-            <div>
-              <Image src={appImage3} alt="App Image 3" layout="responsive" className="rounded-lg md:h-[400px]" />
-            </div>
-            <div>
-              <Image src={appImage4} alt="App Image 4" layout="responsive" className="rounded-lg md:h-[400px]" />
-            </div>
-          </SlickWrapper>
+          {loading ? (
+            <p className="text-white text-center">Loading banners...</p>
+          ) : banners.length === 0 ? (
+            <p className="text-white text-center">No banners available</p>
+          ) : (
+            <SlickWrapper settings={sliderSettings}>
+              {banners.map((banner) => (
+                <div key={banner.id}>
+                  <Image
+                    src={banner.image}
+                    alt={`Banner ${banner.id}`}
+                    width={800}
+                    height={400}
+                    layout="responsive"
+                    className="rounded-lg md:h-[400px]"
+                  />
+                </div>
+              ))}
+            </SlickWrapper>
+          )}
         </div>
       </div>
     </div>

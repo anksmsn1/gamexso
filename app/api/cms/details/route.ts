@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
         position: cms.position,
         heroImage: cms.heroImage,
         content: cms.content,
+        linkposition: cms.linkPosition,
       })
       .from(cms)
       .where(eq(cms.id, id));
