@@ -10,7 +10,7 @@ const DownloadGameBanner = () => {
     
     <div className="flex justify-center items-center p-4 rounded-lg">
       <img
-        src="/qr.jpeg"
+        src="/qr.png"
         alt="Scan to Download Game"
         className="w-36 h-36"
       />
@@ -19,7 +19,7 @@ const DownloadGameBanner = () => {
     <p className="text-sm text-gray-300 mt-4">Point your camera at the QR code to download instantly.</p>
 
     <a
-      href="https://play.google.com/store/apps/details?id=com.beastblocks.gamexso"
+      href="https://play.google.com/store/apps/details?id=com.league.board"
       target="_blank"
       rel="noopener noreferrer"
       className="mt-6 inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition duration-300"

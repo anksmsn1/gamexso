@@ -70,7 +70,7 @@ const Layout: React.FC = () => {
               <img src="/apple.png" alt="Apple Logo" className="h-10" />
             </a>
             <a
-              href="https://play.google.com/store/apps/details?id=com.beastblocks.gamexso"
+              href="https://play.google.com/store/apps/details?id=com.league.board"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2"

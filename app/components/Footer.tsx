@@ -40,7 +40,7 @@ const Footer = () => {
           <div className="lg:w-4/4 flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-8">
             <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-lg">
               <img
-                src="/qr.jpeg"
+                src="/qr.png"
                 alt="Scan to Download Game"
                 className="w-32 h-32"
               />
@@ -52,7 +52,7 @@ const Footer = () => {
                 Ready to start your adventure? Scan the QR code or click the link to download!
               </p>
               <a
-                href="https://play.google.com/store/apps/details?id=com.beastblocks.gamexso"
+                href="https://play.google.com/store/apps/details?id=com.league.board"
                 className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg"
               >
                 Download Game
@@ -158,7 +158,7 @@ const Footer = () => {
             </a>
           </div>
           <div className="text-center text-gray-500">
-            © 2024 Gamexso Games Private Limited. All rights reserved.
+            © 2025 Gamexso Games Private Limited. All rights reserved.
           </div>
         </div>
       </div>
